@@ -1,351 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lifting Gears - Inspection Certificates Catalog</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .search-section {
-            margin-bottom: 30px;
-        }
-        
-        .search-box {
-            position: relative;
-            margin-bottom: 15px;
-        }
-        
-        .search-box input {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 1em;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            transition: border-color 0.3s;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .search-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .badge {
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.85em;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        thead {
-            background: #f8f9fa;
-            border-bottom: 2px solid #e0e0e0;
-        }
-        
-        th {
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            font-size: 0.95em;
-        }
-        
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e0e0e0;
-            color: #555;
-        }
-        
-        tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .certificate-link {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            cursor: pointer;
-            display: inline-block;
-        }
-        
-        .certificate-link:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-        
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-            font-size: 1.1em;
-        }
-        
-        .note {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 15px;
-            margin-top: 30px;
-            border-radius: 4px;
-            color: #155724;
-        }
-        
-        .note strong {
-            color: #0d3818;
-        }
-        
-        .note a {
-            color: #0d3818;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .stat-card .number {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .stat-card .label {
-            font-size: 0.9em;
-            opacity: 0.9;
-        }
-        
-        .support-link {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 10px;
-            transition: background 0.3s;
-        }
-        
-        .support-link:hover {
-            background: #218838;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lifting Gear Inspection Certificates</title>
+  <style>
+    :root {
+      --bg1: #0f172a;
+      --bg2: #1d4ed8;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --surface: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15,23,42,0.35);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 2vw + 1rem, 3rem);
+    }
+
+    .header p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+
+    .content {
+      padding: 24px 28px 32px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .search-box {
+      flex: 1 1 420px;
+      min-width: 240px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .summary {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .badge {
+      background: #dbeafe;
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    thead {
+      background: var(--surface);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    tbody tr:hover {
+      background: #f8fbff;
+    }
+
+    .serial {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .link-btn {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--success);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .link-btn:hover {
+      opacity: 0.9;
+    }
+
+    .link-btn:focus {
+      outline: 3px solid rgba(22,163,74,0.2);
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 28px 18px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      .content { padding: 16px; }
+      .toolbar { align-items: stretch; }
+      th, td { padding: 12px 10px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔐 Lifting Gears Inspection Certificates</h1>
-            <p>Central Repository for Certification Documents & Compliance Tracking</p>
-        </div>
-        
-        <div class="content">
-            <div class="stats" id="statsContainer"></div>
-            
-            <div class="search-section">
-                <div class="search-box">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        placeholder="🔍 Search by Serial Number or Certificate Reference..."
-                        autocomplete="off"
-                    >
-                </div>
-                <div class="search-info">
-                    <span>Search results for: <strong id="searchQuery">All Certificates</strong></span>
-                    <span>Showing <strong id="resultCount">0</strong> of <strong id="totalCount">0</strong> certificates</span>
-                </div>
-            </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Serial Number</th>
-                        <th>Certificate Reference</th>
-                        <th>Link</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                </tbody>
-            </table>
-            
-            <div id="noResults" class="no-results" style="display: none;">
-                No certificates found matching your search.
-            </div>
-            
-            <div class="note">
-                <strong>ℹ️ Note:</strong> Click on certificate reference links to open the PDF in a new window. Support for inquiries available separately.
-                <a href="support.html" class="support-link" target="_blank">📞 Support File</a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>⚙️ Lifting Gear Inspection Certificates</h1>
+      <p>Central repository for all lifting gear inspection certificates and certificate references</p>
     </div>
-    
-    <script>
-        // Certificate data from Table.xlsx (Serial Number | Certificate Reference)
-        // Format: { serialNumber: "WB 0322 11291", certificateRef: "AU-HP-26-41060/40845/46-GL" }
-        const certificates = [
-            // Add your data here from Table.xlsx
-            // Example format:
-            // { serialNumber: "WB 0322 11291", certificateRef: "AU-HP-26-41060/40845/46-GL" },
-            // { serialNumber: "WB 0322 11292", certificateRef: "AU-HP-26-41060/40845/47-GL" },
-            
-            // Placeholder - Please populate from Table.xlsx
-            { serialNumber: "WB 0322 11291", certificateRef: "AU-HP-26-41060-40845-1-GL" },
-            { serialNumber: "WB 0322 11292", certificateRef: "AU-HP-26-41060-40845-2-GL" },
-            { serialNumber: "WB 0322 11293", certificateRef: "AU-HP-26-41060-40845-3-GL" },
-        ];
-        
-        const baseUrl = "https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/raw/main/";
-        
-        // Initialize
-        function init() {
-            updateStats();
-            renderTable(certificates);
-            setupSearch();
-        }
-        
-        function updateStats() {
-            const totalCerts = certificates.length;
-            
-            document.getElementById('statsContainer').innerHTML = `
-                <div class="stat-card">
-                    <div class="number">${totalCerts}</div>
-                    <div class="label">Total Certificates</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number">${new Set(certificates.map(c => c.serialNumber)).size}</div>
-                    <div class="label">Unique Serial Numbers</div>
-                </div>
-            `;
-            
-            document.getElementById('totalCount').textContent = totalCerts;
-        }
-        
-        function openCertificatePdf(certificateRef) {
-            // Convert certificate reference to filename
-            // Example: "AU-HP-26-41060/40845/46-GL" → "AU-HP-26-41060-40845-46-GL.pdf"
-            const filename = certificateRef.replace(/\//g, '-') + '.pdf';
-            const pdfUrl = baseUrl + filename;
-            window.open(pdfUrl, '_blank');
-            return false;
-        }
-        
-        function renderTable(data) {
-            const tbody = document.getElementById('tableBody');
-            const noResults = document.getElementById('noResults');
-            
-            if (data.length === 0) {
-                tbody.innerHTML = '';
-                noResults.style.display = 'block';
-                document.getElementById('resultCount').textContent = 0;
-                return;
-            }
-            
-            noResults.style.display = 'none';
-            document.getElementById('resultCount').textContent = data.length;
-            
-            tbody.innerHTML = data.map((cert, index) => `
-                <tr>
-                    <td><strong>${cert.serialNumber}</strong></td>
-                    <td>${cert.certificateRef}</td>
-                    <td><a onclick="return openCertificatePdf('${cert.certificateRef}')" class="certificate-link">📄 View PDF</a></td>
-                </tr>
-            `).join('');
-        }
-        
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase().trim();
-                document.getElementById('searchQuery').textContent = query || 'All Certificates';
-                
-                if (!query) {
-                    renderTable(certificates);
-                    return;
-                }
-                
-                const filtered = certificates.filter(cert => 
-                    cert.serialNumber.toLowerCase().includes(query) ||
-                    cert.certificateRef.toLowerCase().includes(query)
-                );
-                
-                renderTable(filtered);
-            });
-        }
-        
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+
+    <div class="content">
+      <div class="toolbar">
+        <div class="search-box">
+          <input id="searchInput" type="text" placeholder="Search by serial number or certificate file..." aria-label="Search certificate records" />
+        </div>
+        <div class="summary">
+          <span class="badge" id="resultCount">0 results</span>
+          <span>Total records: <strong id="totalCount">0</strong></span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Serial Number</th>
+              <th>Lifting Gear Certificate File</th>
+              <th>Open</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="emptyState" class="empty">No matching certificate records were found.</div>
+    </div>
+  </div>
+
+  <script>
+    const certificates = [
+      { serialNumber: 'WB 0322 11291', certificateFile: 'AU-HP-26-41060/40845/46-GL' },
+      { serialNumber: 'WB 0322 11292', certificateFile: 'AU-HP-26-41060/40845/46-GL' },
+      { serialNumber: 'WB 0322 11294', certificateFile: 'AU-HP-26-41060/40845/46-GL' },
+      { serialNumber: '88459-6/1', certificateFile: 'AU-HP-26-41060/40845/46-GL' },
+      { serialNumber: '104662-1/1', certificateFile: 'AU-HP-26-41060/40845/37-GL' },
+      { serialNumber: '107433-1/2', certificateFile: 'AU-HP-26-41060/40845/36-GL' },
+      { serialNumber: '107433-5/1', certificateFile: 'AU-HP-26-41060/40845/46-GL' },
+      { serialNumber: '107433-5/2', certificateFile: 'AU-HP-26-41060/40845/46-GL' },
+      { serialNumber: '107433-6/1', certificateFile: 'AU-HP-26-41060/40845/36-GL' },
+      { serialNumber: '107433-6/2', certificateFile: 'AU-HP-26-41060/40845/36-GL' },
+      { serialNumber: '107433-7/1', certificateFile: 'AU-HP-26-41060/40845/33-GL' },
+      { serialNumber: '107433-7/2', certificateFile: 'AU-HP-26-41060/40845/33-GL' },
+      { serialNumber: '107433-9/1', certificateFile: 'AU-HP-26-41060/40845/38-GL' },
+      { serialNumber: 'EA 459', certificateFile: 'AU-HP-26-41060/40845/48-GL' },
+      { serialNumber: 'BE230', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: 'BE231', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: '80352-22/1', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: '80352-22/2', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: 'BE-228', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'BE-229', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE9', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE10', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE11', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE12', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE5', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE6', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE7', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE8', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE1', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE2', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE3', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE4', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'BE227', certificateFile: 'AU-HP-26-41080/40865/3-MNH' },
+      { serialNumber: 'CE13', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: 'CE14', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: 'BE232', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: '88459-11/1', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: '88459-11/2', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: '88459-11/3', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: '88459-11/4', certificateFile: 'AU-HP-26-41080/40865/2-MNH' },
+      { serialNumber: 'BNBS-01', certificateFile: 'AU-HP-26-41080/40865/11-MNH' },
+      { serialNumber: 'BNBS-02', certificateFile: 'AU-HP-26-41080/40865/11-MNH' },
+      { serialNumber: 'DX990', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DX991', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DX992', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DX993', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DM525', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DM526', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DM527', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'DM528', certificateFile: 'AU-HP-26-41080/40865/1-MNH' },
+      { serialNumber: 'T 19010387', certificateFile: 'AU-HP-26-41080/40865/4-MNH' },
+      { serialNumber: 'T 19010946', certificateFile: 'AU-HP-26-41080/40865/4-MNH' },
+      { serialNumber: 'T 17122417', certificateFile: 'AU-HP-26-41080/40865/4-MNH' },
+      { serialNumber: '909070351(ALI 555)', certificateFile: 'AU-HP-26-41080/40865/4-MNH' },
+      { serialNumber: 'XB2172/145', certificateFile: 'AU-HP-26-41080/40865/5-MNH' },
+      { serialNumber: 'XB2115/10', certificateFile: 'AU-HP-26-41080/40865/5-MNH' },
+      { serialNumber: 'T25061581', certificateFile: 'AU-HP-26-41080/40865/5-MNH' },
+      { serialNumber: 'T25031635', certificateFile: 'AU-HP-26-41080/40865/5-MNH' },
+      { serialNumber: 'T25100136', certificateFile: 'AU-HP-26-41080/40865/5-MNH' },
+      { serialNumber: 'T25100180', certificateFile: 'AU-HP-26-41080/40865/5-MNH' },
+      { serialNumber: '5VB-3', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5VB-4', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5VB-5', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5VB-6', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5VB-9', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '5VB-10', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '5VB-11', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '5VB-12', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '5VG-1', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '5VG-2', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '5VG-3', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '5VC-1', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '5SD-1', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '5SD-2', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '5SD-3', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '0UB-1', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: '9VD-1', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9VD-2', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9VD-3', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9VB-1', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '5SF-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5RB-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '6VB-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '6VC-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '9WC-1', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9WC-2', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9WC-3', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9VB-2', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9VB-3', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9VB-4', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '6VB-2', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '6VB-3', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5UD-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '6VB-1', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '6VB-2', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '6VB-3', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '6VB-4', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '6WB-1', certificateFile: 'AU-HP-26-41060/40845/11-GL' },
+      { serialNumber: '6WB-2', certificateFile: 'AU-HP-26-41060/40845/11-GL' },
+      { serialNumber: '6WB-3', certificateFile: 'AU-HP-26-41060/40845/11-GL' },
+      { serialNumber: '5UB-1', certificateFile: 'AU-HP-26-41060/40845/11-GL' },
+      { serialNumber: '5UD-2', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5SE-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5UC-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5UC-2', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5SD-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5UB-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '6WB-1', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '6WB-2', certificateFile: 'AU-HP-26-41060/40845/1-GL' },
+      { serialNumber: '5SC-1', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '5SC-2', certificateFile: 'AU-HP-26-41060/40845/2-GL' },
+      { serialNumber: '7XI-1', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '7XI-2', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '7XE', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '7WL', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '7XE-1', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '7XE-2', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '7X2P-1', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: '7X2P-2', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: '20/0573', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0682', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0669', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0419', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0449', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0314', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0377', certificateFile: 'AU-HP-26-41060/40845/4-GL' },
+      { serialNumber: '21/0751', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0090', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0735', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0737', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0740', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0731', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '20/0010', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '20/0014', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '20/0033', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '20/0002', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0130', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0125', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0129', certificateFile: 'AU-HP-26-41060/40845/5-GL' },
+      { serialNumber: '21/0132', certificateFile: 'AU-HP-26-41060/40845/49-GL' },
+      { serialNumber: '21/0066', certificateFile: 'AU-HP-26-41060/40845/49-GL' },
+      { serialNumber: '21/0068', certificateFile: 'AU-HP-26-41060/40845/49-GL' },
+      { serialNumber: '21/0060', certificateFile: 'AU-HP-26-41060/40845/49-GL' },
+      { serialNumber: '21/0063', certificateFile: 'AU-MS-26-39476/39278/10-JB' },
+      { serialNumber: 'D0137', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0138', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0139', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0140', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0141', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0142', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0143', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0144', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0145', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0146', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0147', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0148', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0149', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: 'D0150', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: 'D0151', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: 'D0152', certificateFile: 'AU-HP-26-41060/40845/9-GL' },
+      { serialNumber: 'D0153', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0154', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0155', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0156', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0157', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0158', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0159', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'D0160', certificateFile: 'AU-HP-26-41060/40845/6-GL' },
+      { serialNumber: 'DM529', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM530', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM531', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM532', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM513', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM514', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM515', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM516', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX974', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX975', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX976', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX977', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX978', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX979', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX980', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX981', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX982', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX983', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX984', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX985', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX986', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX987', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX988', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX989', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM517', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM518', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM519', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM520', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM521', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM522', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM523', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DM524', certificateFile: 'AU-HP-26-41060/40845/7-GL' },
+      { serialNumber: 'DX994', certificateFile: 'AU-HP-26-41060/40845/10-GL' },
+      { serialNumber: 'DX997', certificateFile: 'AU-HP-26-41060/40845/10-GL' },
+      { serialNumber: '9YB-1', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9YB-2', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9YB-3', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '9ZB-1', certificateFile: 'AU-HP-26-41060/40845/3-GL' },
+      { serialNumber: '905210273', certificateFile: 'AU-HP-26-41080/40865/8-MNH' },
+      { serialNumber: '905210378', certificateFile: 'AU-HP-26-41080/40865/8-MNH' },
+      { serialNumber: '905210283', certificateFile: 'AU-HP-26-41080/40865/8-MNH' },
+      { serialNumber: '662', certificateFile: 'AU-HP-26-41080/40865/9-MNH' },
+      { serialNumber: '6021', certificateFile: 'AU-HP-26-41080/40865/9-MNH' },
+      { serialNumber: '205403', certificateFile: 'AU-HP-26-41080/40865/10-MNH' },
+      { serialNumber: 'TH121/01/129', certificateFile: 'AU-HP-26-41080/40865/6-MNH' },
+      { serialNumber: '14/20, 15/20', certificateFile: 'AU-HP-26-41080/40865/7-MNH' },
+      { serialNumber: 'EA 460', certificateFile: 'AU-MS-26-39476/39278/21-JB' },
+      { serialNumber: '221010004', certificateFile: 'AU-HP-26-41060/40845/34-GL' },
+      { serialNumber: 'R2/161754/02', certificateFile: 'AU-HP-26-41060/40845/34-GL' },
+      { serialNumber: 'R2/161754/03', certificateFile: 'AU-HP-26-41060/40845/34-GL' },
+      { serialNumber: 'R3/161757/01', certificateFile: 'AU-HP-26-41060/40845/34-GL' },
+      { serialNumber: 'R3/161757/03', certificateFile: 'AU-HP-26-41060/40845/34-GL' },
+      { serialNumber: 'L608/1', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'L608/2', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'L610/1', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'L610/2', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'MT1/32/B', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'MT1/32/A', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'MS 11', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: 'ALB0006', certificateFile: 'AU-HP-26-41060/40845/13-GL' },
+      { serialNumber: '4821', certificateFile: 'AU-HP-26-41060/40845/14-GL' },
+      { serialNumber: '176766/1', certificateFile: 'AU-HP-26-41060/40845/15-GL' },
+      { serialNumber: 'MT 1745  MT 1743', certificateFile: 'AU-HP-26-41060/40845/16-GL' },
+      { serialNumber: 'TS/22 / T8-22', certificateFile: 'AU-HP-26-41060/40845/17-GL' },
+      { serialNumber: 'HW 43865A', certificateFile: 'AU-HP-26-41060/40845/18-GL' },
+      { serialNumber: 'HW 43865B', certificateFile: 'AU-HP-26-41060/40845/18-GL' },
+      { serialNumber: 'ALBA 07', certificateFile: 'AU-HP-26-41060/40845/19-GL' },
+      { serialNumber: 'ALBA 08', certificateFile: 'AU-HP-26-41060/40845/19-GL' },
+      { serialNumber: 'LDT 16547/T11 22', certificateFile: 'AU-HP-26-41060/40845/20-GL' },
+      { serialNumber: 'TH 23', certificateFile: 'AU-HP-26-41060/40845/21-GL' },
+      { serialNumber: 'TH 24', certificateFile: 'AU-HP-26-41060/40845/21-GL' },
+      { serialNumber: 'TH 25', certificateFile: 'AU-HP-26-41060/40845/22-GL' },
+      { serialNumber: 'TH 26', certificateFile: 'AU-HP-26-41060/40845/22-GL' },
+      { serialNumber: 'HW42890', certificateFile: 'AU-HP-26-41060/40845/23-GL' },
+      { serialNumber: 'RR BK 2170', certificateFile: 'AU-HP-26-41060/40845/24-GL' },
+      { serialNumber: 'TTH-01 /THS-01', certificateFile: 'AU-HP-26-41060/40845/25-GL' },
+      { serialNumber: 'TVS-01', certificateFile: 'AU-HP-26-41060/40845/26-GL' },
+      { serialNumber: '56818.1', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: '56818.2', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: '56818.3', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: '56818.4', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: 'D21.1', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: 'D21.2', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: 'D21.3', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: 'D21.4', certificateFile: 'AU-HP-26-41060/40845/27-GL' },
+      { serialNumber: '56818.5', certificateFile: 'AU-HP-26-41060/40845/28-GL' },
+      { serialNumber: 'J05027', certificateFile: 'AU-HP-26-41060/40845/12-GL' },
+      { serialNumber: '568141', certificateFile: 'AU-HP-26-41060/40845/28-GL' },
+      { serialNumber: '568142', certificateFile: 'AU-HP-26-41060/40845/28-GL' },
+      { serialNumber: '568143', certificateFile: 'AU-HP-26-41060/40845/28-GL' },
+      { serialNumber: 'JH79028.1', certificateFile: 'AU-HP-26-41060/40845/29-GL' },
+      { serialNumber: 'JH79028.2', certificateFile: 'AU-HP-26-41060/40845/29-GL' },
+      { serialNumber: 'JH79028.3', certificateFile: 'AU-HP-26-41060/40845/29-GL' },
+      { serialNumber: 'D1', certificateFile: 'AU-HP-26-41060/40845/30-GL' },
+      { serialNumber: 'HCL-01', certificateFile: 'AU-HP-26-41060/40845/31-GL' },
+      { serialNumber: 'HCL-02', certificateFile: 'AU-HP-26-41060/40845/31-GL' },
+      { serialNumber: 'RT 62', certificateFile: 'AU-HP-26-41060/40845/32-GL' }
+    ];
+
+    const repoBaseUrl = 'https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/raw/main/';
+
+    function pdfFileName(certificateReference) {
+      return certificateReference.replace(/\//g, '-') + '.pdf';
+    }
+
+    function openPdf(certificateReference) {
+      const fileName = pdfFileName(certificateReference);
+      const url = repoBaseUrl + fileName;
+      window.open(url, '_blank', 'noopener,noreferrer');
+      return false;
+    }
+
+    function renderTable(list) {
+      const body = document.getElementById('tableBody');
+      const empty = document.getElementById('emptyState');
+      const resultCount = document.getElementById('resultCount');
+      const totalCount = document.getElementById('totalCount');
+
+      totalCount.textContent = certificates.length;
+      resultCount.textContent = list.length + (list.length === 1 ? ' result' : ' results');
+
+      if (!list.length) {
+        body.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      body.innerHTML = list.map((item, index) => {
+        const fileName = pdfFileName(item.certificateFile);
+        const url = repoBaseUrl + fileName;
+        return `
+          <tr>
+            <td>${index + 1}</td>
+            <td class="serial">${escapeHtml(item.serialNumber)}</td>
+            <td>${escapeHtml(item.certificateFile)}</td>
+            <td>
+              <a class="link-btn" href="${url}" target="_blank" rel="noopener noreferrer">Open in new window</a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function setupSearch() {
+      const input = document.getElementById('searchInput');
+
+      input.addEventListener('input', (event) => {
+        const query = event.target.value.trim().toLowerCase();
+        const filtered = !query
+          ? certificates
+          : certificates.filter(item =>
+              item.serialNumber.toLowerCase().includes(query) ||
+              item.certificateFile.toLowerCase().includes(query)
+            );
+
+        renderTable(filtered);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable(certificates);
+      setupSearch();
+    });
+  </script>
 </body>
 </html>
