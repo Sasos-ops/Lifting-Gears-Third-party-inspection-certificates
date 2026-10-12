@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifting Gears - Inspection Certificates Catalog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .search-section {
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .search-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #555;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .certificate-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .certificate-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1em;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 4px;
+            color: #856404;
+        }
+        
+        .note strong {
+            color: #333;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card .number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Lifting Gears Inspection Certificates</h1>
+            <p>Central Repository for Certification Documents & Compliance Tracking</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats" id="statsContainer"></div>
+            
+            <div class="search-section">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="🔍 Search by Serial Number, Filename, or Certificate ID..."
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="search-info">
+                    <span>Search results for: <strong id="searchQuery">All Certificates</strong></span>
+                    <span>Showing <strong id="resultCount">0</strong> of <strong id="totalCount">0</strong> certificates</span>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Serial Number</th>
+                        <th>Certificate File</th>
+                        <th>Equipment ID</th>
+                        <th>Certification Type</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+            
+            <div id="noResults" class="no-results" style="display: none;">
+                No certificates found matching your search.
+            </div>
+            
+            <div class="note">
+                <strong>ℹ️ Note:</strong> This index is auto-generated from the repository. Serial numbers are cross-referenced with the Table.xlsx file. 
+                Update the Excel file to maintain accurate certificate tracking. 
+                <a href="https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/blob/main/Table.xlsx" style="color: #667eea;">View Excel Data</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Certificate data - populated from repository files
+        const certificates = [
+            // Format: { serialNumber: "...", filename: "...", equipmentId: "...", type: "..." }
+            // This should be populated from Table.xlsx via backend or manually maintained
+            
+            // Example structure based on filenames:
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-1-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-2-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-3-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-4-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-5-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-6-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-7-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-8-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-9-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-10-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-11-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-12-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-13-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-14-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-15-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-16-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-17-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-18-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-19-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-20-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-21-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-22-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-23-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-24-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-25-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-26-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-27-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-28-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-29-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-30-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-31-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-32-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-33-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-34-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-35-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-36-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-37-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-38-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-39-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-40-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-41-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-42-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-43-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-44-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-45-GL.pdf", equipmentId: "40845", type: "GL" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-46-MNH.pdf", equipmentId: "40845", type: "MNH" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-47-MNH.pdf", equipmentId: "40845", type: "MNH" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-48-MNH.pdf", equipmentId: "40845", type: "MNH" },
+            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-49-MNH.pdf", equipmentId: "40845", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-1-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-2-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-3-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-4-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-5-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-6-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-7-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-8-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-9-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-10-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-11-MNH.pdf", equipmentId: "40865", type: "MNH" },
+        ];
+        
+        const baseUrl = "https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/blob/main/";
+        
+        // Initialize
+        function init() {
+            updateStats();
+            renderTable(certificates);
+            setupSearch();
+        }
+        
+        function updateStats() {
+            const uniqueSerials = new Set(certificates.map(c => c.serialNumber)).size;
+            const totalCerts = certificates.length;
+            
+            document.getElementById('statsContainer').innerHTML = `
+                <div class="stat-card">
+                    <div class="number">${totalCerts}</div>
+                    <div class="label">Total Certificates</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${uniqueSerials}</div>
+                    <div class="label">Unique Serial Numbers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${new Set(certificates.map(c => c.equipmentId)).size}</div>
+                    <div class="label">Equipment Units</div>
+                </div>
+            `;
+            
+            document.getElementById('totalCount').textContent = totalCerts;
+        }
+        
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            const noResults = document.getElementById('noResults');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '';
+                noResults.style.display = 'block';
+                document.getElementById('resultCount').textContent = 0;
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            document.getElementById('resultCount').textContent = data.length;
+            
+            tbody.innerHTML = data.map(cert => `
+                <tr>
+                    <td><strong>${cert.serialNumber}</strong></td>
+                    <td>${cert.filename}</td>
+                    <td>${cert.equipmentId}</td>
+                    <td><span class="badge">${cert.type}</span></td>
+                    <td><a href="${baseUrl}${cert.filename}" target="_blank" class="certificate-link">View PDF</a></td>
+                </tr>
+            `).join('');
+        }
+        
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                document.getElementById('searchQuery').textContent = query || 'All Certificates';
+                
+                if (!query) {
+                    renderTable(certificates);
+                    return;
+                }
+                
+                const filtered = certificates.filter(cert => 
+                    cert.serialNumber.toLowerCase().includes(query) ||
+                    cert.filename.toLowerCase().includes(query) ||
+                    cert.equipmentId.includes(query) ||
+                    cert.type.toLowerCase().includes(query)
+                );
+                
+                renderTable(filtered);
+            });
+        }
+        
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
