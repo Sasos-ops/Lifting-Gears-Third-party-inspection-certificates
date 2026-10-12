@@ -1,0 +1,25 @@
+# GitHub Pages configuration for Lifting Gear Inspection Certificates
+
+# Site title
+title: Lifting Gear Inspection Certificates
+
+# Site description
+description: Central repository for all lifting gear inspection certificates and certificate references
+
+# Theme
+theme: jekyll-theme-minimal
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+
+# Exclude files from Jekyll processing
+exclude:
+  - .gitignore
+  - README.md
+  - Table.xlsx
+
+# Enable default assets
+sass:
+  style: compressed
