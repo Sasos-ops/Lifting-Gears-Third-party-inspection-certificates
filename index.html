@@ -124,6 +124,8 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            cursor: pointer;
+            display: inline-block;
         }
         
         .certificate-link:hover {
@@ -139,16 +141,22 @@
         }
         
         .note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background: #d4edda;
+            border-left: 4px solid #28a745;
             padding: 15px;
             margin-top: 30px;
             border-radius: 4px;
-            color: #856404;
+            color: #155724;
         }
         
         .note strong {
-            color: #333;
+            color: #0d3818;
+        }
+        
+        .note a {
+            color: #0d3818;
+            font-weight: 600;
+            text-decoration: underline;
         }
         
         .stats {
@@ -176,6 +184,22 @@
             font-size: 0.9em;
             opacity: 0.9;
         }
+        
+        .support-link {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+        
+        .support-link:hover {
+            background: #218838;
+        }
     </style>
 </head>
 <body>
@@ -193,7 +217,7 @@
                     <input 
                         type="text" 
                         id="searchInput" 
-                        placeholder="🔍 Search by Serial Number, Filename, or Certificate ID..."
+                        placeholder="🔍 Search by Serial Number or Certificate Reference..."
                         autocomplete="off"
                     >
                 </div>
@@ -207,9 +231,7 @@
                 <thead>
                     <tr>
                         <th>Serial Number</th>
-                        <th>Certificate File</th>
-                        <th>Equipment ID</th>
-                        <th>Certification Type</th>
+                        <th>Certificate Reference</th>
                         <th>Link</th>
                     </tr>
                 </thead>
@@ -222,83 +244,28 @@
             </div>
             
             <div class="note">
-                <strong>ℹ️ Note:</strong> This index is auto-generated from the repository. Serial numbers are cross-referenced with the Table.xlsx file. 
-                Update the Excel file to maintain accurate certificate tracking. 
-                <a href="https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/blob/main/Table.xlsx" style="color: #667eea;">View Excel Data</a>
+                <strong>ℹ️ Note:</strong> Click on certificate reference links to open the PDF in a new window. Support for inquiries available separately.
+                <a href="support.html" class="support-link" target="_blank">📞 Support File</a>
             </div>
         </div>
     </div>
     
     <script>
-        // Certificate data - populated from repository files
+        // Certificate data from Table.xlsx (Serial Number | Certificate Reference)
+        // Format: { serialNumber: "WB 0322 11291", certificateRef: "AU-HP-26-41060/40845/46-GL" }
         const certificates = [
-            // Format: { serialNumber: "...", filename: "...", equipmentId: "...", type: "..." }
-            // This should be populated from Table.xlsx via backend or manually maintained
+            // Add your data here from Table.xlsx
+            // Example format:
+            // { serialNumber: "WB 0322 11291", certificateRef: "AU-HP-26-41060/40845/46-GL" },
+            // { serialNumber: "WB 0322 11292", certificateRef: "AU-HP-26-41060/40845/47-GL" },
             
-            // Example structure based on filenames:
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-1-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-2-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-3-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-4-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-5-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-6-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-7-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-8-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-9-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-10-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-11-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-12-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-13-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-14-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-15-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-16-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-17-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-18-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-19-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-20-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-21-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-22-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-23-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-24-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-25-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-26-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-27-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-28-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-29-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-30-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-31-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-32-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-33-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-34-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-35-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-36-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-37-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-38-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-39-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-40-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-41-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-42-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-43-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-44-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-45-GL.pdf", equipmentId: "40845", type: "GL" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-46-MNH.pdf", equipmentId: "40845", type: "MNH" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-47-MNH.pdf", equipmentId: "40845", type: "MNH" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-48-MNH.pdf", equipmentId: "40845", type: "MNH" },
-            { serialNumber: "AU-HP-26-41060-40845", filename: "AU-HP-26-41060-40845-49-MNH.pdf", equipmentId: "40845", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-1-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-2-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-3-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-4-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-5-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-6-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-7-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-8-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-9-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-10-MNH.pdf", equipmentId: "40865", type: "MNH" },
-            { serialNumber: "AU-HP-26-41080-40865", filename: "AU-HP-26-41080-40865-11-MNH.pdf", equipmentId: "40865", type: "MNH" },
+            // Placeholder - Please populate from Table.xlsx
+            { serialNumber: "WB 0322 11291", certificateRef: "AU-HP-26-41060-40845-1-GL" },
+            { serialNumber: "WB 0322 11292", certificateRef: "AU-HP-26-41060-40845-2-GL" },
+            { serialNumber: "WB 0322 11293", certificateRef: "AU-HP-26-41060-40845-3-GL" },
         ];
         
-        const baseUrl = "https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/blob/main/";
+        const baseUrl = "https://github.com/Sasos-ops/Lifting-Gears-Third-party-inspection-certificates/raw/main/";
         
         // Initialize
         function init() {
@@ -308,7 +275,6 @@
         }
         
         function updateStats() {
-            const uniqueSerials = new Set(certificates.map(c => c.serialNumber)).size;
             const totalCerts = certificates.length;
             
             document.getElementById('statsContainer').innerHTML = `
@@ -317,16 +283,21 @@
                     <div class="label">Total Certificates</div>
                 </div>
                 <div class="stat-card">
-                    <div class="number">${uniqueSerials}</div>
+                    <div class="number">${new Set(certificates.map(c => c.serialNumber)).size}</div>
                     <div class="label">Unique Serial Numbers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number">${new Set(certificates.map(c => c.equipmentId)).size}</div>
-                    <div class="label">Equipment Units</div>
                 </div>
             `;
             
             document.getElementById('totalCount').textContent = totalCerts;
+        }
+        
+        function openCertificatePdf(certificateRef) {
+            // Convert certificate reference to filename
+            // Example: "AU-HP-26-41060/40845/46-GL" → "AU-HP-26-41060-40845-46-GL.pdf"
+            const filename = certificateRef.replace(/\//g, '-') + '.pdf';
+            const pdfUrl = baseUrl + filename;
+            window.open(pdfUrl, '_blank');
+            return false;
         }
         
         function renderTable(data) {
@@ -343,13 +314,11 @@
             noResults.style.display = 'none';
             document.getElementById('resultCount').textContent = data.length;
             
-            tbody.innerHTML = data.map(cert => `
+            tbody.innerHTML = data.map((cert, index) => `
                 <tr>
                     <td><strong>${cert.serialNumber}</strong></td>
-                    <td>${cert.filename}</td>
-                    <td>${cert.equipmentId}</td>
-                    <td><span class="badge">${cert.type}</span></td>
-                    <td><a href="${baseUrl}${cert.filename}" target="_blank" class="certificate-link">View PDF</a></td>
+                    <td>${cert.certificateRef}</td>
+                    <td><a onclick="return openCertificatePdf('${cert.certificateRef}')" class="certificate-link">📄 View PDF</a></td>
                 </tr>
             `).join('');
         }
@@ -368,9 +337,7 @@
                 
                 const filtered = certificates.filter(cert => 
                     cert.serialNumber.toLowerCase().includes(query) ||
-                    cert.filename.toLowerCase().includes(query) ||
-                    cert.equipmentId.includes(query) ||
-                    cert.type.toLowerCase().includes(query)
+                    cert.certificateRef.toLowerCase().includes(query)
                 );
                 
                 renderTable(filtered);
